@@ -13,16 +13,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "quizes";
+    private static final String DATABASE_NAME = "quizzes";
     // tasks table name
     private static final String TABLE_QUEST = "quest";
     // tasks Table Columns names
     private static final String KEY_ID = "id";
+    private static final String KEY_QUIZ_ID ="q_id"; //Quiz id
     private static final String KEY_QUES = "question";
     private static final String KEY_ANSWER = "answer"; //correct option
     private static final String KEY_OPTA= "opta"; //option a
     private static final String KEY_OPTB= "optb"; //option b
     private static final String KEY_OPTC= "optc"; //option c
+    private static final String KEY_OPTD= "optd"; //option d
     private SQLiteDatabase dbase;
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,29 +33,29 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         dbase=db;
         String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_QUEST + " ( "
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_QUES
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "+KEY_QUIZ_ID+" TEXT," + KEY_QUES
                 + " TEXT, " + KEY_ANSWER+ " TEXT, "+KEY_OPTA +" TEXT, "
-                +KEY_OPTB +" TEXT, "+KEY_OPTC+" TEXT)";
+                +KEY_OPTB +" TEXT, "+KEY_OPTC+" TEXT,"+KEY_OPTD+" TEXT)";
         db.execSQL(sql);
         addQuestions();
         //db.close();
     }
     private void addQuestions()
     {
-        question q1=new question("Which company is the largest manufacturer" +
-                " of network equipment?","HP", "IBM", "CISCO", "CISCO");
+        question q1=new question("cp1","Which company is the largest manufacturer" +
+                " of network equipment?","HP", "IBM", "CISCO", "4RDOPTN","CISCO");
         this.addQuestion(q1);
-        question q2=new question("Which of the following is NOT " +
-                "an operating system?", "SuSe", "BIOS", "DOS", "BIOS");
+        question q2=new question("cp1","Which of the following is NOT " +
+                "an operating system?", "SuSe", "BIOS", "DOS", "4RDOPTN" ,"BIOS");
         this.addQuestion(q2);
-        question q3=new question("Which of the following is the fastest" +
-                " writable memory?","RAM", "FLASH","Register","Register");
+        question q3=new question("cp1","Which of the following is the fastest" +
+                " writable memory?","RAM", "FLASH","Register","4RDOPTN" ,"Register");
         this.addQuestion(q3);
-        question q4=new question("Which of the following device" +
-                " regulates internet traffic?",	"Router", "Bridge", "Hub","Router");
+        question q4=new question("cp1","Which of the following device" +
+                " regulates internet traffic?",	"Router", "Bridge", "Hub","4RDOPTN" ,"Router");
         this.addQuestion(q4);
-        question q5=new question("Which of the following is NOT an" +
-                " interpreted language?","Ruby","Python","BASIC","BASIC");
+        question q5=new question("cp1","Which of the following is NOT an" +
+                " interpreted language?","Ruby","Python","BASIC","4RDOPTN" ,"BASIC");
         this.addQuestion(q5);
     }
     @Override
@@ -67,11 +69,13 @@ public class DbHelper extends SQLiteOpenHelper {
     public void addQuestion(question quest) {
         //SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(KEY_QUIZ_ID, quest.getQUIZ_ID());
         values.put(KEY_QUES, quest.getQUESTION());
         values.put(KEY_ANSWER, quest.getANSWER());
         values.put(KEY_OPTA, quest.getOPTA());
         values.put(KEY_OPTB, quest.getOPTB());
         values.put(KEY_OPTC, quest.getOPTC());
+        values.put(KEY_OPTD, quest.getOPTD());
         // Inserting Row
         dbase.insert(TABLE_QUEST, null, values);
     }
@@ -91,6 +95,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 quest.setOPTA(cursor.getString(3));
                 quest.setOPTB(cursor.getString(4));
                 quest.setOPTC(cursor.getString(5));
+                quest.setOPTD(cursor.getString(6));
                 quesList.add(quest);
             } while (cursor.moveToNext());
         }

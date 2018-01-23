@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int qid=0;
     question currentQ;
     TextView txtQuestion;
-    RadioButton rda, rdb, rdc;
+    RadioButton rda, rdb, rdc,rdd;
     Button butNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         rda=(RadioButton)findViewById(R.id.radio0);
         rdb=(RadioButton)findViewById(R.id.radio1);
         rdc=(RadioButton)findViewById(R.id.radio2);
+        rdd=(RadioButton)findViewById(R.id.radio3);
         butNext=(Button)findViewById(R.id.button1);
         setQuestionView();
         butNext.setOnClickListener(new View.OnClickListener() {
@@ -39,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 RadioGroup grp=(RadioGroup)findViewById(R.id.radioGroup1);
                 RadioButton answer=(RadioButton)findViewById(grp.getCheckedRadioButtonId());
-                Log.d("yourans", currentQ.getANSWER()+" "+answer.getText());
+                Log.d("your ans", currentQ.getANSWER()+" "+answer.getText());
                 if(currentQ.getANSWER().equals(answer.getText()))
                 {
                     score++;
                     Log.d("score", "Your score"+score);
                 }
-                if(qid<5){
+                if(qid<quesList.size()){
                     currentQ=quesList.get(qid);
                     setQuestionView();
                 }else{
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         rda.setText(currentQ.getOPTA());
         rdb.setText(currentQ.getOPTB());
         rdc.setText(currentQ.getOPTC());
+        rdd.setText(currentQ.getOPTD());
         qid++;
     }
 }
