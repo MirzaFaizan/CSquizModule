@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int qid=0;
     question currentQ;
     TextView txtQuestion;
-    RadioButton rda, rdb, rdc,rdd;
+    RadioButton rda, rdb, rdc;
     Button butNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         rda=(RadioButton)findViewById(R.id.radio0);
         rdb=(RadioButton)findViewById(R.id.radio1);
         rdc=(RadioButton)findViewById(R.id.radio2);
-        rdd=(RadioButton)findViewById(R.id.radio3);
         butNext=(Button)findViewById(R.id.button1);
         setQuestionView();
         butNext.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         rda.setText(currentQ.getOPTA());
         rdb.setText(currentQ.getOPTB());
         rdc.setText(currentQ.getOPTC());
-        rdd.setText(currentQ.getOPTD());
         qid++;
     }
 }
