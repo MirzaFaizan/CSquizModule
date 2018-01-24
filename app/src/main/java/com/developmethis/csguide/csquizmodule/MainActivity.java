@@ -25,8 +25,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // retriveing data from bundle
+        Bundle b = getIntent().getExtras();
+        String quiz= b.getString("quiz");
         DbHelper db=new DbHelper(this);
-        quesList=db.getAllQuestions();
+        quesList=db.getAllQuestions(quiz);
         currentQ=quesList.get(qid);
         txtQuestion=(TextView)findViewById(R.id.textView1);
         rda=(RadioButton)findViewById(R.id.radio0);

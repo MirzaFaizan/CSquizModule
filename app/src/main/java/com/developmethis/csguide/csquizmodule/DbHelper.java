@@ -3,13 +3,22 @@ package com.developmethis.csguide.csquizmodule;
 /**
  * Created by Faizan Ejaz on 1/22/2018.
  */
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.FileHandler;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import static java.lang.Integer.parseInt;
+
 public class DbHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     // Database Name
@@ -24,6 +33,9 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String KEY_OPTA= "opta"; //option a
     private static final String KEY_OPTB= "optb"; //option b
     private static final String KEY_OPTC= "optc"; //option c
+
+    //
+
     private SQLiteDatabase dbase;
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,8 +51,55 @@ public class DbHelper extends SQLiteOpenHelper {
         addQuestions();
         //db.close();
     }
+    public static ArrayList<question> getListProductFromTextFile(String filePath) {
+        FileInputStream fis = null;
+        InputStreamReader isr = null;
+        BufferedReader bReader = null;
+        ArrayList<question> listResult = new ArrayList<question>();
+        try {
+            fis = new FileInputStream(filePath);
+            isr = new InputStreamReader(fis);
+            bReader = new BufferedReader(isr);
+            //String save line get from text file
+            String line = null;
+            //Array save product
+            String[]strProduct = null;
+
+            //Loop and get all data in text file
+            while(true) {
+                //Get 1 line
+                line = bReader.readLine();
+                //Check line get empty, exit loop
+                if(line == null) {
+                    break;
+                } else {
+                    strProduct = line.split(",");
+                    listResult.add(new question(strProduct[0],strProduct[1],strProduct[2],strProduct[3],strProduct[4],strProduct[5]));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Read file error");
+            e.printStackTrace();
+        } finally {
+            //close file
+            try {
+                bReader.close();
+                isr.close();
+                fis.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return listResult;
+    }
     private void addQuestions()
     {
+        ArrayList<question> questionArrayList = getListProductFromTextFile("data.txt");
+        for(int i = 0; i < questionArrayList.size(); i ++) {
+            addQuestion(questionArrayList.get(i));
+        }
         question q1=new question("cp1","Which company is the largest manufacturer" +
                 " of network equipment?","HP", "IBM", "CISCO", "CISCO");
         this.addQuestion(q1);
@@ -78,7 +137,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // Inserting Row
         dbase.insert(TABLE_QUEST, null, values);
     }
-    public List<question> getAllQuestions() {
+    public List<question> getAllQuestions(String quizID) {
         List<question> quesList = new ArrayList<question>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_QUEST;
