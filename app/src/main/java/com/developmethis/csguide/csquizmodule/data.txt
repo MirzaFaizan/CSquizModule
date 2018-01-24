@@ -1,2 +1,0 @@
-cp1,what is your name?,ali,maaz,ahmed,maaz
-cp1,what is that?,lamp,light,airplane,airplane

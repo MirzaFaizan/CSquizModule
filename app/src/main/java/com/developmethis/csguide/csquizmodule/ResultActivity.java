@@ -10,13 +10,13 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-
+        DbHelper db = new DbHelper(this);
         //get text view
         TextView t=(TextView)findViewById(R.id.textResult);
         //get score
         Bundle b = getIntent().getExtras();
         int score= b.getInt("score");
 
-        t.setText(score+"");
+        t.setText(db.rowcount()+"");
     }
 }
