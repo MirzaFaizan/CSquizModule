@@ -44,10 +44,10 @@ public class DbHelper extends SQLiteOpenHelper {
         question q1=new question("cp1","Which company is the largest manufacturer" +
                 " of network equipment?","HP", "IBM", "CISCO", "CISCO");
         this.addQuestion(q1);
-        question q2=new question("cp1","Which of the following is NOT " +
+        question q2=new question("cp2","Which of the following is NOT " +
                 "an operating system?", "SuSe", "BIOS", "DOS", "BIOS");
         this.addQuestion(q2);
-        question q3=new question("cp1","Which of the following is the fastest" +
+        question q3=new question("cp2","Which of the following is the fastest" +
                 " writable memory?","RAM", "FLASH","Register","Register");
         this.addQuestion(q3);
         question q4=new question("cp1","Which of the following device" +
@@ -56,6 +56,9 @@ public class DbHelper extends SQLiteOpenHelper {
         question q5=new question("cp1","Which of the following is NOT an" +
                 " interpreted language?","Ruby","Python","BASIC","BASIC");
         this.addQuestion(q5);
+        question q6=new question("cp1","Which of " +
+                " interpreted language?","Ruby","Python","BASIC","BASIC");
+        this.addQuestion(q6);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
@@ -78,10 +81,10 @@ public class DbHelper extends SQLiteOpenHelper {
         // Inserting Row
         dbase.insert(TABLE_QUEST, null, values);
     }
-    public List<question> getAllQuestions() {
+    public List<question> getAllQuestions(String quizID) {
         List<question> quesList = new ArrayList<question>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_QUEST;
+        String selectQuery = "SELECT  * FROM " + TABLE_QUEST+" WHERE "+KEY_QUIZ_ID+"='"+quizID+"'";
         dbase=this.getReadableDatabase();
         Cursor cursor = dbase.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
