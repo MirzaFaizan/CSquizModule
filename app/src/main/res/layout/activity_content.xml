@@ -4,16 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.developmethis.csguide.csquizmodule.content"
-    android:orientation="vertical">
+    tools:context="com.developmethis.csguide.csquizmodule.Content"
+    android:orientation="vertical"
+    android:weightSum="10">
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_weight="5">
     <Button
-        android:id="@+id/coursebutton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="clickme" />
+        android:text="clickme"
+        android:onClick="quiz1"/>
 </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="5">
+        <Button
+            android:onClick="quiz2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="clickme" />
+    </RelativeLayout>
 </LinearLayout>

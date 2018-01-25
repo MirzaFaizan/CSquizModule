@@ -6,6 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 public class Content extends AppCompatActivity {
 
     Button btn1, btn2;
@@ -32,4 +38,6 @@ public class Content extends AppCompatActivity {
         intent.putExtras(b);
         startActivity(intent);
     }
+
+
 }
